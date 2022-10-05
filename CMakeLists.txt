@@ -33,6 +33,7 @@ set(CMAKE_DEBUG_POSTFIX "d")
 
 #添加子项目
 add_subdirectory(ffmpeg)
+add_subdirectory(d3dwindows)
 
 #创建项目分类文件夹
 SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON)

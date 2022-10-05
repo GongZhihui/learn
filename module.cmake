@@ -18,7 +18,8 @@ ENDMACRO(source_group_by_dir)
 # 将下列扩展名的文件添加到项目中
 macro(find_cur_all_files CUR_DIR)
     file(GLOB_RECURSE ${CUR_DIR} "*.h" "*.cpp" 
-    "*.hpp" "*.ipp" "*.cc" "*.ui" "*.qrc" "*.md")
+    "*.hpp" "*.ipp" "*.cc" "*.ui" "*.qrc" "*.md"
+    "*.hlsl")
 
 endmacro(find_cur_all_files)
 
