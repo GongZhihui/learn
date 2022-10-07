@@ -6,7 +6,7 @@ int main(int argc, char** argv)
 {
     QApplication app{ argc, argv };
     D3d11Widget w;
-    w.resize(400, 300);
+    w.resize(800, 600);
     w.show();
     
 
