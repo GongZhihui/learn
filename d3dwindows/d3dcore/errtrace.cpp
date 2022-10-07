@@ -57,8 +57,8 @@ HRESULT WINAPI DXTraceW(_In_z_ const WCHAR* strFile, _In_ DWORD dwLine, _In_ HRE
 			strBufferFile, strBufferLine, strBufferError, strBufferMsg);
 
 		int nResult = MessageBoxW(GetForegroundWindow(), strBuffer, L"´íÎó", MB_YESNO | MB_ICONERROR);
-		//if (nResult == IDYES)
-			//DebugBreak();
+		if (nResult == IDYES)
+			exit(0);
 	}
 
 	return hr;

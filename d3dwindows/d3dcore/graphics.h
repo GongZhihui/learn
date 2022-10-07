@@ -1,5 +1,9 @@
 #pragma once
+#include <Windows.h>
 #include "global.h"
+
+struct ID3D11Device;
+struct ID3D11DeviceContext;
 
 class Graphics 
 {
@@ -10,6 +14,8 @@ public:
     ~Graphics();
 
     void render();
+    ID3D11Device* device();
+    ID3D11DeviceContext* deviceContext();
 
 private:
     DECLARE_PRIVATE(Graphics)
