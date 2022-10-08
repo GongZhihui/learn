@@ -34,6 +34,8 @@ public:
     void bind() override;
 };
 
+DEFINE_MAKE_UNIQUE_PTR_T(VertexConstantBuffer)
+
 template<class T, IBindable::Type typ>
 inline ConstantBuffer<T, typ>::ConstantBuffer(Graphics& gfx)
     : IBindable{ gfx, typ }
@@ -46,7 +48,7 @@ inline ConstantBuffer<T, typ>::ConstantBuffer(Graphics& gfx)
     cbd.MiscFlags = 0;
     cbd.StructureByteStride = 0;
 
-    HR(device()->CreateBuffer(&cbd, nullptr, constantBuffer.ReleaseAndGetAddressOf()));
+    HR(graphics().device()->CreateBuffer(&cbd, nullptr, constantBuffer.ReleaseAndGetAddressOf()));
 }
 
 template<class T, IBindable::Type typ>
@@ -63,26 +65,26 @@ inline ConstantBuffer<T, typ>::ConstantBuffer(Graphics& gfx, const T& constants)
 
     D3D11_SUBRESOURCE_DATA csd = {};
     csd.pSysMem = &constants;
-    HR(device()->CreateBuffer(&cbd, &csd, constantBuffer.ReleaseAndGetAddressOf()));
+    HR(graphics().device()->CreateBuffer(&cbd, &csd, constantBuffer.ReleaseAndGetAddressOf()));
 }
 
 template<class T, IBindable::Type typ>
 inline void ConstantBuffer<T, typ>::update(const T& constants)
 {
     D3D11_MAPPED_SUBRESOURCE ms;
-    HR(deviceContext()->Map(constantBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &ms));
+    HR(graphics().deviceContext()->Map(constantBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &ms));
     memcpy(ms.pData, &constants, sizeof(constants));
-    deviceContext()->Unmap(constantBuffer.Get(), 0);
+    graphics().deviceContext()->Unmap(constantBuffer.Get(), 0);
 }
 
 template<class T>
 inline void PixelConstantBuffer<T>::bind()
 {
-    deviceContext()->PSSetConstantBuffers(0, 1, constantBuffer.GetAddressOf());
+    graphics().deviceContext()->PSSetConstantBuffers(0, 1, constantBuffer.GetAddressOf());
 }
 
 template<class T>
 inline void VertexConstantBuffer<T>::bind()
 {
-    deviceContext()->VSSetConstantBuffers(0, 1, constantBuffer.GetAddressOf());
+    graphics().deviceContext()->VSSetConstantBuffers(0, 1, constantBuffer.GetAddressOf());
 }

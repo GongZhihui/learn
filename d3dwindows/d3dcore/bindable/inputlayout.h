@@ -18,3 +18,5 @@ private:
     DECLARE_PRIVATE(InputLayout)
 };
 
+DEFINE_MAKE_UNIQUE_PTR(InputLayout)
+

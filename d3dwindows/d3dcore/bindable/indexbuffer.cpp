@@ -2,7 +2,6 @@
 
 #include "d3ddef.h"
 #include "indexbuffer.h"
-#include "graphics.h"
 
 class IndexBuffer::Private 
 {
@@ -31,7 +30,7 @@ IndexBuffer::IndexBuffer(Graphics& gfx, const std::vector<std::uint16_t>& indice
 
     D3D11_SUBRESOURCE_DATA isd = {};
     isd.pSysMem = indices.data();
-    HR(device()->CreateBuffer(&ibd, &isd, p_->indexBuffer.ReleaseAndGetAddressOf()));
+    HR(graphics().device()->CreateBuffer(&ibd, &isd, p_->indexBuffer.ReleaseAndGetAddressOf()));
 }
 
 IndexBuffer::~IndexBuffer()
@@ -40,7 +39,7 @@ IndexBuffer::~IndexBuffer()
 
 void IndexBuffer::bind()
 {
-    deviceContext()->IASetIndexBuffer(p_->indexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
+    graphics().deviceContext()->IASetIndexBuffer(p_->indexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
 }
 
 std::size_t IndexBuffer::count() const

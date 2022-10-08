@@ -15,3 +15,5 @@ public:
 private:
     DECLARE_PRIVATE(Topology)
 };
+
+DEFINE_MAKE_UNIQUE_PTR(Topology)

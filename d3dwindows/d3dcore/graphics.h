@@ -15,7 +15,7 @@ public:
     ~Graphics();
 
     void render();
-    void drawIndexed(std::size_t count);
+    void clearBuffer(float red, float green, float blue);
 
     // Õ∂”∞æÿ’Û
     void setProjection(DirectX::FXMMATRIX projection);
@@ -25,6 +25,10 @@ public:
     ID3D11DeviceContext* deviceContext();
 
 private:
+    void drawIndexed(std::size_t count);
+
+private:
+    friend class IDrawable;
     DECLARE_PRIVATE(Graphics)
     DISABLE_COPY(Graphics)
 };

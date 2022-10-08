@@ -4,9 +4,7 @@
 class InputLayout::Private 
 {
 public:
-    Private() 
-    {
-    }
+    Private() = default;
 
 public:
     ComPtr<ID3D11InputLayout> inputLayout;
@@ -18,15 +16,13 @@ InputLayout::InputLayout(Graphics& gfx,
     : IBindable{ gfx, IBindable::Type::InputLayout }
     , MAKE_PRIVATRE(InputLayout)
 {
-    HR(device()->CreateInputLayout(layout.data(), std::size(layout), shaderBytecode->GetBufferPointer(),
+    HR(graphics().device()->CreateInputLayout(layout.data(), std::size(layout), shaderBytecode->GetBufferPointer(),
         shaderBytecode->GetBufferSize(), p_->inputLayout.ReleaseAndGetAddressOf()));
 }
 
-InputLayout::~InputLayout()
-{
-}
+InputLayout::~InputLayout(){}
 
 void InputLayout::bind()
 {
-    deviceContext()->IASetInputLayout(p_->inputLayout.Get());
+    graphics().deviceContext()->IASetInputLayout(p_->inputLayout.Get());
 }

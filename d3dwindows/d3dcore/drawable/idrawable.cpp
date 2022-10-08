@@ -15,7 +15,7 @@ public:
     
 public:
     Graphics& graphics;
-    IndexBuffer* indexBuffer;
+    IndexBuffer* indexBuffer{ nullptr };
     std::vector<IBindable::upointer> binds;
 };
 

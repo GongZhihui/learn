@@ -18,3 +18,5 @@ public:
 private:
     DECLARE_PRIVATE(IndexBuffer)
 };
+
+DEFINE_MAKE_UNIQUE_PTR(IndexBuffer)

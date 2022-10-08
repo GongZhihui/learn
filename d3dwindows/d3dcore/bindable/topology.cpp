@@ -24,5 +24,5 @@ Topology::~Topology()
 
 void Topology::bind()
 {
-    deviceContext()->IASetPrimitiveTopology(p_->typ);
+    graphics().deviceContext()->IASetPrimitiveTopology(p_->typ);
 }

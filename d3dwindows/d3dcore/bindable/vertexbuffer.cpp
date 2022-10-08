@@ -3,5 +3,5 @@
 void VertexBuffer::bind()
 {
     const UINT offset = 0;
-    deviceContext()->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
+    graphics().deviceContext()->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
 }

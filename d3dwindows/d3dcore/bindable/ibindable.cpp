@@ -1,5 +1,4 @@
 #include "ibindable.h"
-#include "graphics.h"
 
 class IBindable::Private
 {
@@ -28,13 +27,8 @@ IBindable::Type IBindable::type() const
     return p_->type;
 }
 
-ID3D11Device* IBindable::device()
+Graphics& IBindable::graphics()
 {
-    return p_->graphics.device();
-}
-
-ID3D11DeviceContext* IBindable::deviceContext()
-{
-    return p_->graphics.deviceContext();
+    return p_->graphics;
 }
 

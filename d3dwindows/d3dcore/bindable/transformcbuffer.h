@@ -16,3 +16,5 @@ public:
 private:
     DECLARE_PRIVATE(TransformCBuffer)
 };
+
+DEFINE_MAKE_UNIQUE_PTR(TransformCBuffer)

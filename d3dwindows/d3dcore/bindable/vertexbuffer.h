@@ -20,6 +20,8 @@ private:
     ComPtr<ID3D11Buffer> vertexBuffer;
 };
 
+DEFINE_MAKE_UNIQUE_PTR(VertexBuffer)
+
 template<class T>
 inline VertexBuffer::VertexBuffer(Graphics& gfx, const std::vector<T>& vertices)
     : IBindable{ gfx, IBindable::Type::VertexBuffer }
@@ -35,5 +37,5 @@ inline VertexBuffer::VertexBuffer(Graphics& gfx, const std::vector<T>& vertices)
 
     D3D11_SUBRESOURCE_DATA sd = {};
     sd.pSysMem = vertices.data();
-    HR(device()->CreateBuffer(&bd, &sd, vertexBuffer.ReleaseAndGetAddressOf()));
+    HR(graphics().device()->CreateBuffer(&bd, &sd, vertexBuffer.ReleaseAndGetAddressOf()));
 }

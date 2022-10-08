@@ -1,5 +1,6 @@
 #pragma once
 #include "global.h"
+#include "graphics.h"
 
 class Graphics;
 struct ID3D11Device;
@@ -17,7 +18,9 @@ public:
         InputLayout,
         Topology,
         VertexBuffer,
-        TransformCBuffer
+        TransformCBuffer,
+        PixelShader,
+        VertexShader
     };
 
     IBindable(Graphics& gfx, IBindable::Type type);
@@ -26,8 +29,7 @@ public:
     virtual void bind() = 0;
 
     IBindable::Type type() const;
-    ID3D11Device* device();
-    ID3D11DeviceContext* deviceContext();
+    Graphics& graphics();
 
 private:
     DECLARE_PRIVATE(IBindable)

@@ -21,6 +21,13 @@ auto Make##ClassName(Args&& ...args) \
     return std::make_unique<ClassName>(std::forward<Args>(args)...); \
 }
 
+#define DEFINE_MAKE_UNIQUE_PTR_T(ClassName) \
+template<class T, class ...Args> \
+auto Make##ClassName(Args&& ...args) \
+{ \
+    return std::make_unique<ClassName<T>>(std::forward<Args>(args)...); \
+}
+
 #define DEFINE_MAKE_SHARED_PTR(ClassName) \
 template<class ...Args> \
 auto Make##ClassName(Args&& ...args) \

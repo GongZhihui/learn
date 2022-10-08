@@ -2,20 +2,17 @@
 
 #include "transformcbuffer.h"
 #include "constantbuffer.h"
-#include "graphics.h"
 
 class TransformCBuffer::Private
 {
 public:
     Private(Graphics& gfx, const IDrawable& draw)
-        : graphics{ gfx }
-        , drawable{ draw }
+        : drawable{ draw }
         , vcbuffer{ gfx }
     {
     }
 
 public:
-    Graphics& graphics;
     const IDrawable& drawable;
     VertexConstantBuffer<DirectX::XMMATRIX> vcbuffer;
 };
@@ -31,6 +28,6 @@ TransformCBuffer::~TransformCBuffer(){}
 void TransformCBuffer::bind()
 {
     p_->vcbuffer.update(DirectX::XMMatrixTranspose(
-        p_->drawable.transform() * p_->graphics.projection()));
+        p_->drawable.transform() * graphics().projection()));
     p_->vcbuffer.bind();
 }
