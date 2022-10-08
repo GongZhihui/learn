@@ -13,7 +13,7 @@ public:
 };
 
 Topology::Topology(Graphics& gfx, D3D_PRIMITIVE_TOPOLOGY type)
-    : IBindable{ gfx }
+    : IBindable{ gfx, IBindable::Type::Topology }
     , MAKE_PRIVATRE(Topology, type)
 {
 }

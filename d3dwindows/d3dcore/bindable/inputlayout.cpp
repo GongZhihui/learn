@@ -15,7 +15,7 @@ public:
 InputLayout::InputLayout(Graphics& gfx, 
     const std::vector<D3D11_INPUT_ELEMENT_DESC>& layout, 
     ID3DBlob* shaderBytecode)
-    : IBindable{ gfx }
+    : IBindable{ gfx, IBindable::Type::InputLayout }
     , MAKE_PRIVATRE(InputLayout)
 {
     HR(device()->CreateInputLayout(layout.data(), std::size(layout), shaderBytecode->GetBufferPointer(),

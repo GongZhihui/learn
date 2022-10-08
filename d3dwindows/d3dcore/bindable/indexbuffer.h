@@ -7,6 +7,8 @@
 class IndexBuffer : public IBindable 
 {
 public:
+    DEFINE_POINTER(IndexBuffer)
+
     IndexBuffer(Graphics& gfx, const std::vector<std::uint16_t>& indices);
     ~IndexBuffer();
 

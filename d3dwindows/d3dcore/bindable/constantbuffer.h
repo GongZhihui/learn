@@ -5,7 +5,7 @@
 #include "ibindable.h"
 #include "d3ddef.h"
 
-template<class T>
+template<class T, IBindable::Type typ>
 class ConstantBuffer : public IBindable 
 {
 public:
@@ -19,24 +19,24 @@ protected:
 };
 
 template<class T>
-class PixelConstantBuffer : public ConstantBuffer<T> 
+class PixelConstantBuffer : public ConstantBuffer<T, IBindable::Type::PixelContant>
 {
 public:
-    using ConstantBuffer<T>::ConstantBuffer;
+    using ConstantBuffer<T, IBindable::Type::PixelContant>::ConstantBuffer;
     void bind() override;
 };
 
 template<class T>
-class VertexConstantBuffer : public ConstantBuffer<T> 
+class VertexConstantBuffer : public ConstantBuffer<T, IBindable::Type::VertexContant>
 {
 public:
-    using ConstantBuffer<T>::ConstantBuffer;
+    using ConstantBuffer<T, IBindable::Type::VertexContant>::ConstantBuffer;
     void bind() override;
 };
 
-template<class T>
-inline ConstantBuffer<T>::ConstantBuffer(Graphics& gfx)
-    : IBindable{ gfx }
+template<class T, IBindable::Type typ>
+inline ConstantBuffer<T, typ>::ConstantBuffer(Graphics& gfx)
+    : IBindable{ gfx, typ }
 {
     D3D11_BUFFER_DESC cbd = {};
     cbd.ByteWidth = sizeof(T);
@@ -49,9 +49,9 @@ inline ConstantBuffer<T>::ConstantBuffer(Graphics& gfx)
     HR(device()->CreateBuffer(&cbd, nullptr, constantBuffer.ReleaseAndGetAddressOf()));
 }
 
-template<class T>
-inline ConstantBuffer<T>::ConstantBuffer(Graphics& gfx, const T& constants)
-    : IBindable{ gfx }
+template<class T, IBindable::Type typ>
+inline ConstantBuffer<T, typ>::ConstantBuffer(Graphics& gfx, const T& constants)
+    : IBindable{ gfx, typ }
 {
     D3D11_BUFFER_DESC cbd = {};
     cbd.ByteWidth = sizeof(constants);
@@ -66,11 +66,11 @@ inline ConstantBuffer<T>::ConstantBuffer(Graphics& gfx, const T& constants)
     HR(device()->CreateBuffer(&cbd, &csd, constantBuffer.ReleaseAndGetAddressOf()));
 }
 
-template<class T>
-inline void ConstantBuffer<T>::update(const T& constants)
+template<class T, IBindable::Type typ>
+inline void ConstantBuffer<T, typ>::update(const T& constants)
 {
     D3D11_MAPPED_SUBRESOURCE ms;
-    HR(deviceContext()->Map(constantBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, ms));
+    HR(deviceContext()->Map(constantBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &ms));
     memcpy(ms.pData, &constants, sizeof(constants));
     deviceContext()->Unmap(constantBuffer.Get(), 0);
 }

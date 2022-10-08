@@ -1,5 +1,6 @@
 #pragma once
 #include <Windows.h>
+#include <DirectXMath.h>
 #include "global.h"
 
 struct ID3D11Device;
@@ -14,6 +15,12 @@ public:
     ~Graphics();
 
     void render();
+    void drawIndexed(std::size_t count);
+
+    // Õ∂”∞æÿ’Û
+    void setProjection(DirectX::FXMMATRIX projection);
+    DirectX::XMMATRIX projection();
+
     ID3D11Device* device();
     ID3D11DeviceContext* deviceContext();
 

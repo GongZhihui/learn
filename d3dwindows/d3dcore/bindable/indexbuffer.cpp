@@ -18,7 +18,7 @@ public:
 };
 
 IndexBuffer::IndexBuffer(Graphics& gfx, const std::vector<std::uint16_t>& indices)
-    : IBindable{ gfx }
+    : IBindable{ gfx, IBindable::Type::IndexBuffer }
     , MAKE_PRIVATRE(IndexBuffer, indices.size())
 {
     D3D11_BUFFER_DESC ibd = {};

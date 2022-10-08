@@ -22,11 +22,11 @@ private:
 
 template<class T>
 inline VertexBuffer::VertexBuffer(Graphics& gfx, const std::vector<T>& vertices)
-    : IBindable{ gfx }
+    : IBindable{ gfx, IBindable::Type::VertexBuffer }
     , stride{ sizeof(T) }
 {
     D3D11_BUFFER_DESC bd = {};
-    bd.ByteWidth = sizeof(T) * vertices.size();
+    bd.ByteWidth = static_cast<UINT>(sizeof(T) * vertices.size());
     bd.Usage = D3D11_USAGE_DEFAULT;
     bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
     bd.CPUAccessFlags = 0;

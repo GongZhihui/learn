@@ -74,13 +74,13 @@ public:
 
         // ´´½¨¶¥µã»º³å
         std::vector<Vertex> vertexs = {
-            { 0, 0.5, 255, 0, 0, 0 },
-            { 0.5, -0.5, 0, 255, 0, 0 },
-            { -0.5, -0.5, 0, 0, 255, 0 },
+            { 0.0f, 0.5f, 255, 0, 0, 0 },
+            { 0.5f, -0.5f, 0, 255, 0, 0 },
+            { -0.5f, -0.5f, 0, 0, 255, 0 },
 
-            { -0.3, 0.3, 0, 255, 0, 0 },
-            { 0.3, 0.3, 0, 0, 255, 0 },
-            { 0.0, -0.8, 255, 0, 0, 0 },
+            { -0.3f, 0.3f, 0, 255, 0, 0 },
+            { 0.3f, 0.3f, 0, 0, 255, 0 },
+            { 0.0f, -0.8f, 255, 0, 0, 0 },
         };
 
         VertexBuffer{ graphics, vertexs }.bind();
@@ -105,13 +105,13 @@ public:
         };
         
         static float angle = 0;
-        angle+=0.1;
+        angle+=0.1f;
         if (angle > 100)
             angle = 0;
         const ConstantBuffer cb = {
             {
-                (9.0 / 16.0)* std::cos(angle), std::sin(angle), 0.0f, 0.0f,
-                (9.0 / 16.0) * -std::sin(angle), std::cos(angle), 0.0f, 0.0f,
+                (9.0f / 16.0f)* std::cos(angle), std::sin(angle), 0.0f, 0.0f,
+                (9.0f / 16.0f) * -std::sin(angle), std::cos(angle), 0.0f, 0.0f,
                 0.0f, 0.0f, 1.0f, 0.0f,
                 0.0f, 0.0, 0.0f, 1.0f,
             }
@@ -163,7 +163,7 @@ public:
         vp.TopLeftY = 0;
         ctx->RSSetViewports(1, &vp);
 
-        ctx->DrawIndexed(std::size(indices), 0, 0);
+        ctx->DrawIndexed(static_cast<UINT>(std::size(indices)), 0, 0);
     }
 
     void render() 
@@ -180,6 +180,7 @@ public:
     ComPtr<IDXGISwapChain> swapChain;
     ComPtr<ID3D11DeviceContext> ctx;
     ComPtr<ID3D11RenderTargetView> targetView;
+    DirectX::XMMATRIX projection;
 };
 
 Graphics::Graphics(HWND hwnd)
@@ -194,6 +195,21 @@ Graphics::~Graphics()
 void Graphics::render()
 {
     p_->render();
+}
+
+void Graphics::drawIndexed(std::size_t count)
+{
+    p_->ctx->DrawIndexed(static_cast<UINT>(count), 0u, 0u);
+}
+
+void Graphics::setProjection(DirectX::FXMMATRIX projection)
+{
+    p_->projection = projection;
+}
+
+DirectX::XMMATRIX Graphics::projection()
+{
+    return p_->projection;
 }
 
 ID3D11Device* Graphics::device()
