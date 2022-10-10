@@ -43,6 +43,19 @@ public:
         HR(swapChain->GetBuffer(0, __uuidof(ID3D11Resource), 
             reinterpret_cast<void**>(buffer.ReleaseAndGetAddressOf())));
         HR(device->CreateRenderTargetView(buffer.Get(), nullptr, targetView.ReleaseAndGetAddressOf()));
+
+        // bind render target
+        ctx->OMSetRenderTargets(1, targetView.GetAddressOf(), nullptr);
+
+        // configure viewport
+        D3D11_VIEWPORT vp;
+        vp.Width = 1920;
+        vp.Height = 1080;
+        vp.MinDepth = 0;
+        vp.MaxDepth = 1;
+        vp.TopLeftX = 0;
+        vp.TopLeftY = 0;
+        ctx->RSSetViewports(1, &vp);
     }
 
     void clearBuffer(float red, float green, float blue)
