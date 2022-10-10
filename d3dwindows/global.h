@@ -22,10 +22,10 @@ auto Make##ClassName(Args&& ...args) \
 }
 
 #define DEFINE_MAKE_UNIQUE_PTR_T(ClassName) \
-template<class T, class ...Args> \
+template<class ...Ts, class ...Args> \
 auto Make##ClassName(Args&& ...args) \
 { \
-    return std::make_unique<ClassName<T>>(std::forward<Args>(args)...); \
+    return std::make_unique<ClassName<Ts...>>(std::forward<Args>(args)...); \
 }
 
 #define DEFINE_MAKE_SHARED_PTR(ClassName) \
